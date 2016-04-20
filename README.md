@@ -1,2 +1,3 @@
-# source-deps
-Command line tool to build sources with dependncies between repositories
+# Source Dependency Tool
+
+Command line tool to build sources with dependencies between repositories.
