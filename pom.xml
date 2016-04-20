@@ -29,9 +29,18 @@
 			<version>1.2</version>
 		</dependency>
 
-      	<!-- ************************************************************* -->
-        <!-- Logging                                                       -->
-        <!-- ************************************************************* -->
+		<!-- ===============================================================================  -->
+		<!--        SunePoulsen                                                               -->
+		<!-- ===============================================================================  -->
+		<dependency>
+			<groupId>dk.sunepoulsen</groupId>
+			<artifactId>clt</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- ===============================================================================  -->
+		<!--        Logging                                                                   -->
+		<!-- ===============================================================================  -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -44,8 +53,18 @@
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.0.13</version>
+			<version>1.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>1.7.21</version>
 		</dependency>
 
       	<!-- ************************************************************* -->
