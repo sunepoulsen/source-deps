@@ -1,5 +1,5 @@
 #!/bin/bash
-//usr/bin/env groovy -classpath ../lib/${project.artifactId}-${project.version}-jar-with-dependencies.jar -d "$0" $@; exit $?
+//usr/bin/env groovy -classpath ${project.artifactId}-${project.version}.jar -d "$0" $@; exit $?
 
 //-----------------------------------------------------------------------------
 /*
