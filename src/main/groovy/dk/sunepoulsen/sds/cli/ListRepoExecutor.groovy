@@ -1,6 +1,7 @@
 //-----------------------------------------------------------------------------
 package dk.sunepoulsen.sds.cli
 
+//-----------------------------------------------------------------------------
 import dk.sunepoulsen.clt.api.CliException
 import dk.sunepoulsen.clt.api.SubCommandExecutor
 import dk.sunepoulsen.sds.vcs.api.VCSRepository
@@ -27,7 +28,7 @@ class ListRepoExecutor implements SubCommandExecutor {
         logger.entry();
 
         try {
-            String settingsFilename = System.getProperty( "user.home" ) + "/.source-deps/settings.json"
+            String settingsFilename = CliConstants.SETTINGS_FILENAME
             if( !new File( settingsFilename ).exists() ) {
                 throw new CliException( "The settings file '${settingsFilename}' does not exist" )
             }
