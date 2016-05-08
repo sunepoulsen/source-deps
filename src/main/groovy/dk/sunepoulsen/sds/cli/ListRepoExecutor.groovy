@@ -38,26 +38,26 @@ class ListRepoExecutor implements SubCommandExecutor {
             }
 
             /*
-            GitHubClient client = new GitHubClient();
-            client.setOAuth2Token("843c8cd6d2ed44fb62b849d3b29e1990f81a6c98");
+                GitHubClient client = new GitHubClient();
+                client.setOAuth2Token("<oauth-token>");
 
-            RepositoryService service = new RepositoryService( client );
-            for (Repository repo : service.getRepositories()) {
-                logger.info( "Name: {}, Private: {}", repo.name, repo.private);
-            }
+                RepositoryService service = new RepositoryService( client );
+                for (Repository repo : service.getRepositories()) {
+                    logger.info( "Name: {}, Private: {}", repo.name, repo.private);
+                }
 
-            ContentsService contentsService = new ContentsService( client );
-            List<RepositoryContents> contents = contentsService.getContents(service.getRepository("sunepoulsen", "mycash"), "pom.xml", "master");
-            for( RepositoryContents repositoryContents : contents ) {
-                logger.info( "" );
-                logger.info( "sunepoulsen/mycash/master/pom.xml:" );
-                logger.info( "====================================" );
-                logger.info( "Name: {}/{}", repositoryContents.path, repositoryContents.name );
-                logger.info( "Encoding: {}", repositoryContents.encoding );
-                logger.info( "SHA: {}", repositoryContents.sha );
+                ContentsService contentsService = new ContentsService( client );
+                List<RepositoryContents> contents = contentsService.getContents(service.getRepository("sunepoulsen", "mycash"), "pom.xml", "master");
+                for( RepositoryContents repositoryContents : contents ) {
+                    logger.info( "" );
+                    logger.info( "sunepoulsen/mycash/master/pom.xml:" );
+                    logger.info( "====================================" );
+                    logger.info( "Name: {}/{}", repositoryContents.path, repositoryContents.name );
+                    logger.info( "Encoding: {}", repositoryContents.encoding );
+                    logger.info( "SHA: {}", repositoryContents.sha );
 
-                logger.info( "Contents:\n{}", new String( DatatypeConverter.parseBase64Binary( repositoryContents.content ), StandardCharsets.UTF_8 ) )
-            }
+                    logger.info( "Contents:\n{}", new String( DatatypeConverter.parseBase64Binary( repositoryContents.content ), StandardCharsets.UTF_8 ) )
+                }
             */
         }
         finally {
