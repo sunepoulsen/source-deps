@@ -47,7 +47,7 @@ class ListRepoExecutor implements SubCommandExecutor {
                 }
 
                 ContentsService contentsService = new ContentsService( client );
-                List<RepositoryContents> contents = contentsService.getContents(service.getRepository("sunepoulsen", "mycash"), "pom.xml", "master");
+                List<RepositoryContents> contents = contentsService.getContents(service.getRepository("<username>", "<repository-name>"), "<filename>", "<branch-name>");
                 for( RepositoryContents repositoryContents : contents ) {
                     logger.info( "" );
                     logger.info( "sunepoulsen/mycash/master/pom.xml:" );
