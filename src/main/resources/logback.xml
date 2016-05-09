@@ -6,21 +6,35 @@
         </filter>
 
         <encoder>
-            <Pattern>[%level] %msg%n</Pattern>
+            <Pattern>%msg%n</Pattern>
         </encoder>
     </appender>
 
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
 		<file>sds.log</file>
+        <append>false</append>
 
 		<encoder>
 			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
 		</encoder>
 	</appender>
 
+    <logger name="dk.sunepoulsen.sds">
+        <level name="DEBUG" />
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="Cli.Output.Logger">
+        <level name="INFO" />
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <!--
 	<root level="DEBUG">
         <appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
+	-->
 	
 </configuration>

@@ -4,6 +4,7 @@ package dk.sunepoulsen.sds.cli
 //-----------------------------------------------------------------------------
 import dk.sunepoulsen.clt.api.CliException
 import dk.sunepoulsen.clt.api.SubCommandExecutor
+import dk.sunepoulsen.clt.cli.CliApplication
 import dk.sunepoulsen.sds.vcs.api.VCSRepository
 import dk.sunepoulsen.sds.vcs.api.VCSService
 import dk.sunepoulsen.sds.vcs.api.VCSServiceFactory
@@ -35,7 +36,7 @@ class ListRepoExecutor implements SubCommandExecutor {
 
             VCSService service = VCSServiceFactory.newInstance( settingsFilename )
             for( VCSRepository repo : service.repositories() ) {
-                logger.info( "{}: {}", repo.name, repo.description );
+                output.info( "{}: {}", repo.name, repo.description );
             }
 
             /*
@@ -71,4 +72,5 @@ class ListRepoExecutor implements SubCommandExecutor {
     //-------------------------------------------------------------------------
 
     private static final XLogger logger = XLoggerFactory.getXLogger( ListRepoExecutor.class );
+    private static final XLogger output = XLoggerFactory.getXLogger( CliApplication.OUTPUT_LOGGER_NAME );
 }
