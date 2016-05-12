@@ -5,7 +5,7 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver"   value="org.h2.Driver"/>
-            <property name="javax.persistence.jdbc.url"      value="jdbc:h2:~/.source-deps/deps.h2"/>
+            <property name="javax.persistence.jdbc.url"      value="jdbc:h2:~/.source-deps/deps;MV_STORE=FALSE"/>
             <property name="javax.persistence.jdbc.user"     value="source-deps"/>
             <property name="javax.persistence.jdbc.password" value=""/>
 

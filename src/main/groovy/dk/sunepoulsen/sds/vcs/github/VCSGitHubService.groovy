@@ -26,10 +26,17 @@ class VCSGitHubService implements VCSService {
         client.setOAuth2Token( settings.auth.token );
     }
 
+    @Override
     String type() {
         return "github"
     }
 
+    @Override
+    URI url() {
+        return new URI( "https://github.com" )
+    }
+
+    @Override
     List<VCSRepository> repositories() throws VCSException {
         try {
             List<VCSRepository> result = new ArrayList<>()

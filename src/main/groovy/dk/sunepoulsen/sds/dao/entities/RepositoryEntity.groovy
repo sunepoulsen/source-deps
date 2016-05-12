@@ -1,16 +1,16 @@
 //-----------------------------------------------------------------------------
 package dk.sunepoulsen.sds.dao.entities
 
-//-----------------------------------------------------------------------------
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
  * Entity a for repository from a VCS Service.
  */
+@NamedQueries( [
+        @NamedQuery( name = "findByName", query = "SELECT r FROM repositories r WHERE r.name = :name" )
+])
 @Entity( name = "repositories" )
 class RepositoryEntity {
     public RepositoryEntity() {

@@ -23,5 +23,7 @@ interface VCSService {
      */
     String type()
 
+    URI url()
+
     List<VCSRepository> repositories() throws VCSException
 }
