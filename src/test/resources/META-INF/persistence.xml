@@ -2,6 +2,7 @@
     <persistence-unit name="source-deps-test" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>dk.sunepoulsen.sds.dao.entities.RepositoryEntity</class>
+        <class>dk.sunepoulsen.sds.dao.entities.BranchEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"   value="org.h2.Driver"/>
@@ -11,6 +12,9 @@
 
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

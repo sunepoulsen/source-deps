@@ -37,7 +37,7 @@ class AnalyzeExecutor implements SubCommandExecutor {
 
             DataStorage storage = new DataStorage( "source-deps" )
             try {
-                AnalyzeVCSService analyzer = new AnalyzeVCSService(service, storage)
+                AnalyzeVCSService analyzer = new AnalyzeVCSService( service, storage )
                 analyzer.analyze()
             }
             finally {

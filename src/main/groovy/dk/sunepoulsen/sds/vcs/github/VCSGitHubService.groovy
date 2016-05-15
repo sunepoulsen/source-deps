@@ -43,7 +43,7 @@ class VCSGitHubService implements VCSService {
 
             RepositoryService service = new RepositoryService(client);
             for( Repository repo : service.getRepositories() ) {
-                result.add( new VCSGitHubRepository( repo ) )
+                result.add( new VCSGitHubRepository( client, repo ) )
             }
 
             return result;

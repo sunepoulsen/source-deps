@@ -3,15 +3,16 @@ package dk.sunepoulsen.sds.analysis
 
 import dk.sunepoulsen.clt.cli.CliApplication
 import dk.sunepoulsen.sds.dao.storage.DataStorage
+import dk.sunepoulsen.sds.vcs.api.VCSRepository
 
 //-----------------------------------------------------------------------------
-import dk.sunepoulsen.sds.vcs.api.VCSRepository
 import dk.sunepoulsen.sds.vcs.api.VCSService
 import org.slf4j.ext.XLogger
 import org.slf4j.ext.XLoggerFactory
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.Future
 
 //-----------------------------------------------------------------------------
@@ -19,12 +20,12 @@ import java.util.concurrent.Future
  * Analyze all repositories in a VCS Service in separate treads.
  */
 class AnalyzeVCSService {
-    public AnalyzeVCSService(VCSService service, DataStorage storage ) {
+    public AnalyzeVCSService( VCSService service, DataStorage storage ) {
         this.service = service
         this.storage = storage
 
         this.pool = Executors.newWorkStealingPool()
-        logger.info( "Parallelism level for analyzing pool: {}", pool.getParallelism() )
+        logger.info( "Parallelism level for analyzing pool: {}", ((ForkJoinPool)pool).getParallelism() )
     }
 
     void analyze() {
@@ -33,7 +34,7 @@ class AnalyzeVCSService {
 
             List<VCSRepository> repositories = service.repositories()
             for( VCSRepository repo : repositories ) {
-                tasks.add( pool.submit( new AnalyzeVCSRepository( service, storage, repo ) ) )
+                tasks.add( pool.submit( new AnalyzeVCSRepository( repo, storage ) ) )
             }
 
             // Wait for analyzing tasks to complete
@@ -62,6 +63,7 @@ class AnalyzeVCSService {
     private static final XLogger output = XLoggerFactory.getXLogger( CliApplication.OUTPUT_LOGGER_NAME )
     private static final XLogger logger = XLoggerFactory.getXLogger( AnalyzeVCSService.class );
 
+    //private String settingsFilename
     private VCSService service
     private DataStorage storage
     private ExecutorService pool

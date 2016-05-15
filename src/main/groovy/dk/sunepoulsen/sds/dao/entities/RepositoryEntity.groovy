@@ -1,12 +1,12 @@
 //-----------------------------------------------------------------------------
 package dk.sunepoulsen.sds.dao.entities
 
+//-----------------------------------------------------------------------------
 import javax.persistence.*
 
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 /**
- * Entity a for repository from a VCS Service.
+ * Entity for a repository from a VCS Service.
  */
 @NamedQueries( [
         @NamedQuery( name = "findByName", query = "SELECT r FROM repositories r WHERE r.name = :name" )
@@ -20,20 +20,28 @@ class RepositoryEntity {
         this.name = name
     }
 
-    Integer getId() {
+    public Integer getId() {
         return id
     }
 
-    void setId(Integer id) {
+    public void setId(Integer id) {
         this.id = id
     }
 
-    String getName() {
+    public String getName() {
         return name
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name
+    }
+
+    public List<BranchEntity> getBranches() {
+        return branches
+    }
+
+    public void setBranches( List<BranchEntity> branches ) {
+        this.branches = branches
     }
 
     //-------------------------------------------------------------------------
@@ -46,4 +54,7 @@ class RepositoryEntity {
 
     @Column( unique = true )
     private String name;
+
+    @OneToMany( cascade = CascadeType.ALL, mappedBy = "repository", orphanRemoval = true )
+    private List<BranchEntity> branches
 }

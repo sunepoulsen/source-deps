@@ -2,9 +2,9 @@
 package dk.sunepoulsen.sds.dao.entities
 
 import org.junit.After
+import org.junit.Before
 
 //-----------------------------------------------------------------------------
-import org.junit.Before
 import org.junit.Test
 import org.slf4j.ext.XLogger
 import org.slf4j.ext.XLoggerFactory
@@ -51,6 +51,45 @@ class RepositoryEntityTest {
             entity = em.find(RepositoryEntity.class, 2)
             assert entity.id == 2
             assert entity.name == "mycash-core"
+        }
+        finally {
+            em.close()
+        }
+    }
+
+    @Test
+    public void createWithBranches() {
+        EntityManager em = emf.createEntityManager()
+
+        try {
+            RepositoryEntity entity
+
+            EntityTransaction tx = em.getTransaction()
+            try {
+                tx.begin()
+
+                entity = new RepositoryEntity("mycash")
+                entity.branches = new ArrayList<BranchEntity>()
+                entity.branches.add( new BranchEntity( entity, "master" ) )
+                entity.branches.add( new BranchEntity( entity, "develop" ) )
+
+                em.persist( entity )
+                tx.commit()
+            }
+            catch (SQLException ex) {
+                logger.error(ex.message, ex)
+                tx.rollback()
+                throw ex
+            }
+
+            entity = em.find(RepositoryEntity.class, 1)
+            assert entity.id == 1
+            assert entity.name == "mycash"
+
+            assert entity.branches != null
+            assert entity.branches.size() == 2
+            assert entity.branches[0].name == "master"
+            assert entity.branches[1].name == "develop"
         }
         finally {
             em.close()

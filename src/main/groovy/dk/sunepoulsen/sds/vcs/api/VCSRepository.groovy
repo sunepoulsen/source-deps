@@ -25,4 +25,6 @@ interface VCSRepository {
      * </p>
      */
     String getDescription()
+
+    List<VCSBranch> getBranches()
 }
