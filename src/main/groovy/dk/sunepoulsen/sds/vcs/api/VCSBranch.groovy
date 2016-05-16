@@ -3,9 +3,13 @@ package dk.sunepoulsen.sds.vcs.api
 
 //-----------------------------------------------------------------------------
 /**
- * Representation of a branch in a VCS repository.
+ * Representation of a branch, tag or commit in a VCS repository.
  */
 interface VCSBranch {
+    //-------------------------------------------------------------------------
+    //                  Methods
+    //-------------------------------------------------------------------------
+
     /**
      * Name of the branch.
      * <p>
@@ -18,4 +22,9 @@ interface VCSBranch {
      * Reference to the repository that defines this branch.
      */
     VCSRepository getRepository()
+
+    /**
+     * Returns a list of files and directories in the root of this branch.
+     */
+    List<VCSFile> listFiles()
 }

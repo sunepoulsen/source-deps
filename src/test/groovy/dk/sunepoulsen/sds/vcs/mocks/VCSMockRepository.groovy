@@ -10,9 +10,11 @@ import dk.sunepoulsen.sds.vcs.api.VCSRepository
  * Created by sunepoulsen on 15/05/16.
  */
 class VCSMockRepository implements VCSRepository {
-    public VCSMockRepository( String name, String description ) {
-        this.name = name
-        this.description = description
+    public VCSMockRepository( File path ) {
+        this.path = path
+
+        this.name = path.name
+        this.description = ""
         this.branches = null
     }
 
@@ -28,17 +30,19 @@ class VCSMockRepository implements VCSRepository {
 
     @Override
     List<VCSBranch> getBranches() {
-        return branches
-    }
+        if( branches == null ) {
+            List<File> dirs = path.listFiles().findAll { it.isDirectory() }
+            branches = dirs.collect { new VCSMockBranch( this, it ) }
+        }
 
-    void setBranches( List<VCSBranch> branches ) {
-        this.branches = branches
-        this.branches.forEach { it.setRepository( this ) }
+        return branches
     }
 
     //-------------------------------------------------------------------------
     //              Members
     //-------------------------------------------------------------------------
+
+    private File path
 
     private String name
     private String description

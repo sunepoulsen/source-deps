@@ -12,12 +12,12 @@ import org.slf4j.ext.XLoggerFactory
  * Created by sunepoulsen on 15/05/16.
  */
 class VCSMockService implements VCSService {
-    public VCSMockService() {
-        this.repositories = null
-    }
+    public VCSMockService( String testname ) {
+        Properties props = new Properties()
+        props.load( getClass().getResourceAsStream( "settings.properties" ) )
 
-    public VCSMockService( List<VCSRepository> repositories ) {
-        this.repositories = repositories
+        this.path = new File( props.getProperty( "test.vcs.directory" ) + "/" + testname )
+        this.repositories = null
     }
 
     @Override
@@ -32,46 +32,12 @@ class VCSMockService implements VCSService {
 
     @Override
     List<VCSRepository> repositories() throws VCSException {
-        return null
-    }
-
-    void setRepositories( List<VCSRepository> repositories ) {
-        this.repositories = repositories
-    }
-
-    //-------------------------------------------------------------------------
-    //              Factories
-    //-------------------------------------------------------------------------
-
-    public static VCSMockService newInstance() {
-        return new VCSMockService()
-    }
-
-    public static VCSMockService newInstance( List repos ) {
-        List<VCSRepository> repoResult = []
-
-        repoResult = repos.collect { it ->
-            logger.info( "Outer collect: {}", it )
-
-            VCSMockRepository repo = new VCSMockRepository( it.name, it.description )
-            repo.branches = []
-            repo.branches = it.branches.collect { name ->
-                logger.info( "Inner collect: {}", name )
-
-                def branch = new VCSMockBranch( repo, name )
-                logger.debug( "Inner adds: {}", branch )
-                //repo.branches.add( branch )
-
-                return branch
-            }
-
-            logger.debug( "Outer adds: {}", repo )
-            //repoResult.add( repo )
-
-            return repo
+        if( repositories == null ) {
+            List<File> dirs = path.listFiles().findAll { it.isDirectory() }
+            repositories = dirs.collect { new VCSMockRepository( it ) }
         }
 
-        return new VCSMockService( repoResult )
+        return repositories
     }
 
     //-------------------------------------------------------------------------
@@ -80,5 +46,7 @@ class VCSMockService implements VCSService {
 
     private static final XLogger logger = XLoggerFactory.getXLogger( VCSMockService.class )
 
-    List<VCSRepository> repositories
+    private File path
+    private List<VCSRepository> repositories
+
 }

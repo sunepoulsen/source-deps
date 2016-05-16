@@ -32,19 +32,19 @@ class VCSGitHubRepository implements VCSRepository {
     @Override
     List<VCSBranch> getBranches() {
         if( this.branches == null ) {
-            this.branches = new ArrayList<>()
-
             RepositoryService service = new RepositoryService( client )
 
             List<RepositoryBranch> remoteBranches = service.getBranches( repository )
             if( remoteBranches != null ) {
-                for( RepositoryBranch remoteBranch : remoteBranches ) {
-                    this.branches.add( new VCSGitHubBranch( this, remoteBranch.name ) )
-                }
+                this.branches = remoteBranches.collect { new VCSGitHubBranch( client, this, it.name ) }
             }
         }
 
-        return branches
+        return this.branches
+    }
+
+    Repository getGitHubRepository() {
+        return repository
     }
 
     //-------------------------------------------------------------------------

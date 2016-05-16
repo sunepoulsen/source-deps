@@ -26,6 +26,11 @@ class VCSGitHubService implements VCSService {
         client.setOAuth2Token( settings.auth.token );
     }
 
+    public VCSGitHubService( String token ) {
+        client = new GitHubClient();
+        client.setOAuth2Token( token );
+    }
+
     @Override
     String type() {
         return "github"

@@ -4,9 +4,9 @@ package dk.sunepoulsen.sds.analysis
 import dk.sunepoulsen.sds.dao.entities.BranchEntity
 import dk.sunepoulsen.sds.dao.entities.RepositoryEntity
 import dk.sunepoulsen.sds.dao.storage.DataStorage
+import dk.sunepoulsen.sds.vcs.api.VCSService
 
 //-----------------------------------------------------------------------------
-import dk.sunepoulsen.sds.vcs.api.VCSService
 import dk.sunepoulsen.sds.vcs.mocks.VCSMockService
 import org.junit.After
 import org.junit.Before
@@ -37,15 +37,9 @@ class AnalyzeVCSRepositoryTest {
 
     @Test
     public void testNewRepository() {
-        VCSService vcs = VCSMockService.newInstance( [
-                [
-                        name: "mycash",
-                        description: "",
-                        branches: [ "master" ]
-                ]
-        ] )
+        VCSService vcs = new VCSMockService( "analyze/repositories/new-repo" )
 
-        AnalyzeVCSRepository instance = new AnalyzeVCSRepository( vcs.repositories[0], storage )
+        AnalyzeVCSRepository instance = new AnalyzeVCSRepository( vcs.repositories()[0], storage )
         instance.run()
 
         RepositoryEntity entity = storage.find( RepositoryEntity.class ) { EntityManager em ->
@@ -60,13 +54,7 @@ class AnalyzeVCSRepositoryTest {
 
     @Test
     public void testUpdateRepository_NewBranch() {
-        VCSService vcs = VCSMockService.newInstance( [
-                [
-                        name: "mycash",
-                        description: "",
-                        branches: [ "master", "develop" ]
-                ]
-        ] )
+        VCSService vcs = new VCSMockService( "analyze/repositories/new-branch" )
 
         storage.persist { EntityManager em ->
             RepositoryEntity entity = new RepositoryEntity( "mycash" )
@@ -77,7 +65,7 @@ class AnalyzeVCSRepositoryTest {
             em.persist( entity )
         }
 
-        AnalyzeVCSRepository instance = new AnalyzeVCSRepository( vcs.repositories[0], storage )
+        AnalyzeVCSRepository instance = new AnalyzeVCSRepository( vcs.repositories()[0], storage )
         instance.run()
 
         RepositoryEntity entity = storage.find( RepositoryEntity.class ) { EntityManager em ->
@@ -92,13 +80,7 @@ class AnalyzeVCSRepositoryTest {
 
     @Test
     public void testUpdateRepository_DeleteBranch() {
-        VCSService vcs = VCSMockService.newInstance( [
-                [
-                        name: "mycash",
-                        description: "",
-                        branches: [ "master" ]
-                ]
-        ] )
+        VCSService vcs = new VCSMockService( "analyze/repositories/delete-branch" )
 
         storage.persist { EntityManager em ->
             RepositoryEntity entity = new RepositoryEntity( "mycash" )
@@ -110,7 +92,7 @@ class AnalyzeVCSRepositoryTest {
             em.persist( entity )
         }
 
-        AnalyzeVCSRepository instance = new AnalyzeVCSRepository( vcs.repositories[0], storage )
+        AnalyzeVCSRepository instance = new AnalyzeVCSRepository( vcs.repositories()[0], storage )
         instance.run()
 
         RepositoryEntity entity = storage.find( RepositoryEntity.class ) { EntityManager em ->
