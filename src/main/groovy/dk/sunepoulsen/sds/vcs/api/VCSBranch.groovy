@@ -24,6 +24,11 @@ interface VCSBranch {
     VCSRepository getRepository()
 
     /**
+     * Returns the root directory of this branch.
+     */
+    VCSFile rootFile()
+
+    /**
      * Returns a list of files and directories in the root of this branch.
      */
     List<VCSFile> listFiles()

@@ -25,6 +25,12 @@ class VCSMockBranch implements VCSBranch {
         return repository
     }
 
+    @Override
+    VCSFile rootFile() {
+        return new VCSMockFile( path )
+    }
+
+    @Override
     List<VCSFile> listFiles() {
         return path.listFiles().collect { new VCSMockFile( it ) }
     }

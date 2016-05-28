@@ -5,10 +5,9 @@ import dk.sunepoulsen.sds.vcs.api.VCSBranch
 import dk.sunepoulsen.sds.vcs.api.VCSFile
 import dk.sunepoulsen.sds.vcs.api.VCSRepository
 import dk.sunepoulsen.sds.vcs.api.VCSService
-
-//-----------------------------------------------------------------------------
 import org.junit.Test
 
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class VCSMockTest {
     @Test
@@ -64,7 +63,7 @@ class VCSMockTest {
         assert xml.groupId == "dk.sunepoulsen.mycash"
         assert xml.artifactId == "project"
         assert xml.version == "1.0.0"
-        assert xml.wrongNode == ""
+        def x = xml.wrongNode
         assert xml.wrongParent.wrongChild == ""
 
         assert xml.properties instanceof groovy.util.slurpersupport.GPathResult
