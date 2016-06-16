@@ -48,6 +48,7 @@ class BranchEntity {
 
     @Id
     @GeneratedValue
+    @Column( name = "branch_id" )
     private Integer id;
 
     @ManyToOne

@@ -50,6 +50,7 @@ class RepositoryEntity {
 
     @Id
     @GeneratedValue
+    @Column( name = "repository_id" )
     private Integer id;
 
     @Column( unique = true )
