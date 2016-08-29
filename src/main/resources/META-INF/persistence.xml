@@ -3,6 +3,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>dk.sunepoulsen.sds.dao.entities.RepositoryEntity</class>
         <class>dk.sunepoulsen.sds.dao.entities.BranchEntity</class>
+        <class>dk.sunepoulsen.sds.dao.entities.ProjectEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"   value="org.h2.Driver"/>

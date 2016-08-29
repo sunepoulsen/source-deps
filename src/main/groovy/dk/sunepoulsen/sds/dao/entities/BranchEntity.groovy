@@ -4,7 +4,6 @@ package dk.sunepoulsen.sds.dao.entities
 import javax.persistence.*
 
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 /**
  * Entity for a branch in a repository from a VCS Service.
  */
@@ -18,28 +17,36 @@ class BranchEntity {
         this.repository = repository
     }
 
-    public Integer getId() {
+    Integer getId() {
         return id
     }
 
-    public void setId( Integer id ) {
+    void setId( Integer id ) {
         this.id = id
     }
 
-    public RepositoryEntity getRepository() {
+    RepositoryEntity getRepository() {
         return repository
     }
 
-    public void setRepository( RepositoryEntity repository ) {
+    void setRepository( RepositoryEntity repository ) {
         this.repository = repository
     }
 
-    public String getName() {
+    String getName() {
         return name
     }
 
-    public void setName( String name ) {
+    void setName( String name ) {
         this.name = name
+    }
+
+    List<ProjectEntity> getProjects() {
+        return projects
+    }
+
+    void setProjects( List<ProjectEntity> projects ) {
+        this.projects = projects
     }
 
     //-------------------------------------------------------------------------
@@ -57,4 +64,7 @@ class BranchEntity {
 
     @Column( unique = false )
     private String name;
+
+    @OneToMany( cascade = CascadeType.ALL, mappedBy = "branch", orphanRemoval = true )
+    private List<ProjectEntity> projects
 }

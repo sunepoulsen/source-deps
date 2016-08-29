@@ -15,9 +15,6 @@ class SourceProject {
         this.name = null
         this.version = null
         this.repositoryName = null
-        this.parent = null
-        this.subProjects = []
-        this.dependencies = []
     }
 
     //-------------------------------------------------------------------------
@@ -43,22 +40,4 @@ class SourceProject {
      * Name of the repository that contains the sources of the project.
      */
     String repositoryName
-
-    /**
-     * A link to the parent project.
-     * <p>
-     *     May be null.
-     * </p>
-     */
-    SourceProject parent
-
-    /**
-     * List of any sub projects.
-     */
-    List<SourceProject> subProjects
-
-    /**
-     * Dependencies to other projects.
-     */
-    List<SourceProject> dependencies
 }

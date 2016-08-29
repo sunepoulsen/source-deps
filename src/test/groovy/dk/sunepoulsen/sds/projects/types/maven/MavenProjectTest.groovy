@@ -74,7 +74,7 @@ class MavenProjectTest {
     }
 
     @Test
-    public void testAnalyze_Single_Success() {
+    public void testAnalyze_Success() {
         VCSService vcs = new VCSMockService( "analyze/projects/maven/single" )
 
         VCSRepository repo = vcs.repositories().find { it.name == "mycash-core" }
@@ -88,40 +88,5 @@ class MavenProjectTest {
 
         assert rootProject.name == "dk.sunepoulsen.mycash-core"
         assert rootProject.version == new SourceVersion( "1.0.0" )
-        assert rootProject.parent == null
-        assert rootProject.subProjects == []
-    }
-
-    @Test
-    public void testAnalyze_SubProjects_Success() {
-        VCSService vcs = new VCSMockService( "analyze/projects/maven/subprojects" )
-
-        VCSRepository repo = vcs.repositories().find { it.name == "mycash" }
-        assert repo != null
-
-        VCSBranch branch = repo.branches.find { it.name == "master" }
-        assert branch != null
-
-        MavenProject instance = new MavenProject()
-        SourceProject rootProject = instance.analyze( branch.rootFile() )
-
-        assert rootProject.name == "dk.sunepoulsen.mycash.project"
-        assert rootProject.version == new SourceVersion( "1.0.0" )
-        assert rootProject.parent == null
-
-        ListIterator<SourceProject> iterator = rootProject.subProjects.listIterator()
-        SourceProject project
-
-        project = iterator.next()
-        assert project.name == "dk.sunepoulsen.mycash.mycash"
-        assert project.version == new SourceVersion( "1.0.0" )
-        assert project.parent == rootProject
-
-        project = iterator.next()
-        assert project.name == "dk.sunepoulsen.mycash.branding"
-        assert project.version == new SourceVersion( "1.0.0" )
-        assert project.parent == rootProject
-
-        assert iterator.hasNext() == false
     }
 }

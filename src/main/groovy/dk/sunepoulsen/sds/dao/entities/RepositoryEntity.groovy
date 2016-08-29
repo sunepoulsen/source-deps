@@ -9,7 +9,7 @@ import javax.persistence.*
  * Entity for a repository from a VCS Service.
  */
 @NamedQueries( [
-        @NamedQuery( name = "findByName", query = "SELECT r FROM repositories r WHERE r.name = :name" )
+    @NamedQuery( name = "findByName", query = "SELECT r FROM repositories r WHERE r.name = :name" )
 ])
 @Entity( name = "repositories" )
 class RepositoryEntity {

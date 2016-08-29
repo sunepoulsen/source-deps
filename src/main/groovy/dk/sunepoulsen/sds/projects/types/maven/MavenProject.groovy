@@ -1,10 +1,12 @@
 //-----------------------------------------------------------------------------
 package dk.sunepoulsen.sds.projects.types.maven
 
+import dk.sunepoulsen.maven.builder.*
 import dk.sunepoulsen.sds.projects.SourceProject
 import dk.sunepoulsen.sds.projects.SourceVersion
 import dk.sunepoulsen.sds.projects.types.api.ProjectType
 import dk.sunepoulsen.sds.vcs.api.VCSFile
+import org.apache.maven.model.Model
 
 //-----------------------------------------------------------------------------
 /**
@@ -31,37 +33,24 @@ class MavenProject implements ProjectType {
             throw new IllegalArgumentException( "vcsFile must not be (null)" )
         }
 
-        return analyseRecursive( null, vcsFile )
-    }
-
-    SourceProject analyseRecursive( SourceProject parent, VCSFile vcsFile ) {
         if( vcsFile.type == VCSFile.VCSFileType.FILE ) {
             throw new IllegalArgumentException( "vcsFile must be a directory" )
         }
 
         VCSFile pomFile = vcsFile.listFiles().find { it.name == "pom.xml" }
-        def xml = new XmlSlurper().parseText( pomFile.content )
+        DefaultModelBuilderRequest request = new DefaultModelBuilderRequest()
+        request.setModelSource( new StringModelSource( pomFile.content ) )
+
+        ModelBuilder builder = new DefaultModelBuilder()
+        ModelBuilderResult modelBuilderResult = builder.build( request )
+
+        Model rawModel = modelBuilderResult.rawModel
 
         SourceProject project = new SourceProject()
-
-        String groupId = xml.groupId
-        if( groupId == "" ) {
-            groupId = xml.parent.groupId
-        }
-        String version = xml.version
-        if( version == "" ) {
-            version = xml.parent.version
-        }
-
-        project.name = "${groupId}.${xml.artifactId}"
-        project.version = new SourceVersion( version )
-        project.parent = parent
-
-        if( xml.packaging.text() == "pom" ) {
-            List<VCSFile> subProjectFiles = vcsFile.listFiles().findAll { isProject( it ) }
-            project.subProjects = subProjectFiles.collect { analyseRecursive( project, it ) }
-        }
+        project.name = rawModel.groupId + "." + rawModel.artifactId
+        project.version = new SourceVersion( rawModel.version )
 
         return project
     }
+
 }
